@@ -172,7 +172,7 @@ This project is created for educational purposes as part of AWS Coding Camp.
 
 ## 👤 Author
 
-Hanif Firdaus 
+Hanif Firdaus
 AWS Builder ID: d-9067642ac7.e4f8a418-f051-70b0-9451-759e8f03be22
 
 ## 🙏 Acknowledgments
