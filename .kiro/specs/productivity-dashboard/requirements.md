@@ -23,13 +23,15 @@ The Productivity Dashboard is a lightweight web application that helps users man
 
 #### Acceptance Criteria
 
-1. THE Greeting_Display SHALL show the current time in 12-hour format with AM/PM
-2. THE Greeting_Display SHALL show the current date including day of week, month, and day
-3. WHEN the current hour is between 5 AM and 11 AM, THE Greeting_Display SHALL show "Good Morning"
-4. WHEN the current hour is between 12 PM and 4 PM, THE Greeting_Display SHALL show "Good Afternoon"
-5. WHEN the current hour is between 5 PM and 8 PM, THE Greeting_Display SHALL show "Good Evening"
-6. WHEN the current hour is between 9 PM and 4 AM, THE Greeting_Display SHALL show "Good Night"
-7. THE Greeting_Display SHALL update the time display every second
+1. THE Greeting_Display SHALL show the current time with support for both 12-hour (with AM/PM) and 24-hour formats
+2. THE Greeting_Display SHALL allow users to toggle between 12-hour and 24-hour time formats by clicking on the time display
+3. THE Greeting_Display SHALL save the user's time format preference to Local_Storage
+4. THE Greeting_Display SHALL show the current date in international format (e.g., "Friday, March 14, 2025")
+5. WHEN the current hour is between 5 AM and 11 AM, THE Greeting_Display SHALL show "Good Morning"
+6. WHEN the current hour is between 12 PM and 3 PM, THE Greeting_Display SHALL show "Good Afternoon"
+7. WHEN the current hour is between 4 PM and 6 PM, THE Greeting_Display SHALL show "Good Evening"
+8. WHEN the current hour is between 7 PM and 4 AM, THE Greeting_Display SHALL show "Good Night"
+9. THE Greeting_Display SHALL update the time display every second
 
 ### Requirement 2: Focus Timer Functionality
 
@@ -126,36 +128,42 @@ The Productivity Dashboard is a lightweight web application that helps users man
 
 ### Requirement 9: Optional Enhancement - Theme Switching
 
+**Status:** ✅ IMPLEMENTED
+
 **User Story:** As a user, I want to switch between light and dark modes, so that I can use the dashboard comfortably in different lighting conditions.
 
 #### Acceptance Criteria
 
-1. WHERE theme switching is implemented, THE Dashboard SHALL provide a toggle control for light and dark modes
-2. WHERE theme switching is implemented, THE Dashboard SHALL save the user's theme preference to Local_Storage
-3. WHERE theme switching is implemented, WHEN the Dashboard loads, THE Dashboard SHALL apply the saved theme preference
-4. WHERE theme switching is implemented, THE Dashboard SHALL apply appropriate color schemes for both light and dark modes
+1. ✅ THE Dashboard SHALL provide a toggle control for light and dark modes (floating button top-right)
+2. ✅ THE Dashboard SHALL save the user's theme preference to Local_Storage
+3. ✅ WHEN the Dashboard loads, THE Dashboard SHALL apply the saved theme preference
+4. ✅ THE Dashboard SHALL apply appropriate color schemes for both light and dark modes
 
 ### Requirement 10: Optional Enhancement - Customizable Timer Duration
+
+**Status:** ✅ IMPLEMENTED
 
 **User Story:** As a user, I want to change the Pomodoro timer duration, so that I can customize my focus sessions.
 
 #### Acceptance Criteria
 
-1. WHERE timer customization is implemented, THE Dashboard SHALL allow users to set custom timer durations
-2. WHERE timer customization is implemented, THE Dashboard SHALL save the custom duration to Local_Storage
-3. WHERE timer customization is implemented, THE Dashboard SHALL validate that timer durations are between 1 and 120 minutes
-4. WHERE timer customization is implemented, WHEN the Dashboard loads, THE Dashboard SHALL use the saved custom duration
+1. ✅ THE Dashboard SHALL allow users to set custom timer durations (double-click timer display)
+2. ✅ THE Dashboard SHALL save the custom duration to Local_Storage
+3. ✅ THE Dashboard SHALL validate that timer durations are between 1 and 120 minutes
+4. ✅ WHEN the Dashboard loads, THE Dashboard SHALL use the saved custom duration
 
 ### Requirement 11: Optional Enhancement - Task Sorting
+
+**Status:** ✅ IMPLEMENTED
 
 **User Story:** As a user, I want to sort my tasks, so that I can organize them by priority or completion status.
 
 #### Acceptance Criteria
 
-1. WHERE task sorting is implemented, THE Dashboard SHALL provide options to sort tasks by creation order, completion status, or alphabetically
-2. WHERE task sorting is implemented, THE Dashboard SHALL maintain the sort order in Local_Storage
-3. WHERE task sorting is implemented, WHEN a new task is added, THE Dashboard SHALL place it according to the current sort order
-4. WHERE task sorting is implemented, THE Dashboard SHALL update the display immediately when sort order changes
+1. ✅ THE Dashboard SHALL provide options to sort tasks by creation order, completion status, or alphabetically
+2. ✅ THE Dashboard SHALL maintain the sort order in Local_Storage
+3. ✅ WHEN a new task is added, THE Dashboard SHALL place it according to the current sort order
+4. ✅ THE Dashboard SHALL update the display immediately when sort order changes
 
 ## Deployment Requirements
 

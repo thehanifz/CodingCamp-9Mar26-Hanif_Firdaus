@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Productivity Dashboard</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Theme Toggle -->
+        <button id="theme-toggle" class="theme-toggle" onclick="toggleTheme()" title="Toggle dark/light mode">
+            <span class="theme-icon">🌙</span>
+        </button>
+
+        <!-- Greeting Display Component -->
+        <section class="greeting-section">
+            <div id="time-display"></div>
+            <div id="date-display"></div>
+            <h1 id="greeting-text"></h1>
+        </section>
+
+        <!-- Focus Timer Component -->
+        <section class="timer-section">
+            <h2>Focus Timer</h2>
+            <div id="timer-display">25:00</div>
+            <div class="timer-controls">
+                <button id="start-btn">Start</button>
+                <button id="stop-btn">Stop</button>
+                <button id="reset-btn">Reset</button>
+            </div>
+        </section>
+
+        <!-- Task Manager Component -->
+        <section class="tasks-section">
+            <h2>To-Do List</h2>
+            <div class="task-sort-controls">
+                <button class="sort-btn active" data-sort="creation">By Date</button>
+                <button class="sort-btn" data-sort="completed">By Status</button>
+                <button class="sort-btn" data-sort="alphabetical">A-Z</button>
+            </div>
+            <div class="task-input-container">
+                <input type="text" id="task-input" placeholder="Enter a new task...">
+                <button id="add-task-btn">Add Task</button>
+            </div>
+            <ul id="task-list"></ul>
+        </section>
+
+        <!-- Quick Links Component -->
+        <section class="links-section">
+            <h2>Quick Links</h2>
+            <div class="link-input-container">
+                <input type="text" id="link-name-input" placeholder="Link name...">
+                <input type="text" id="link-url-input" placeholder="URL...">
+                <button id="add-link-btn">Add Link</button>
+            </div>
+            <div id="links-container"></div>
+        </section>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
