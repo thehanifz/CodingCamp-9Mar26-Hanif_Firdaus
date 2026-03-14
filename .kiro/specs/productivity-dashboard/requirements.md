@@ -1,8 +1,90 @@
 # Requirements Document
 
+## Project Information
+
+**Project Name:** Productivity Dashboard  
+**Version:** 1.0.0  
+**Status:** ✅ COMPLETED  
+**Assignment:** AWS Coding Camp - To-Do List Life Dashboard
+
 ## Introduction
 
 The Productivity Dashboard is a lightweight web application that helps users manage their time and tasks effectively. It provides essential productivity tools including a greeting display, focus timer, to-do list, and quick links manager. The application runs entirely in the browser using vanilla JavaScript and Local Storage, requiring no backend infrastructure or complex setup.
+
+## Assignment Compliance
+
+### Technical Constraints (All Met ✅)
+
+**TC-1: Technology Stack**
+- ✅ HTML for structure
+- ✅ CSS for styling  
+- ✅ Vanilla JavaScript (no frameworks)
+- ✅ No backend server required
+
+**TC-2: Data Storage**
+- ✅ Browser Local Storage API
+- ✅ All data stored client-side only
+
+**TC-3: Browser Compatibility**
+- ✅ Works in Chrome, Firefox, Edge, Safari
+- ✅ Can be used as standalone web app or browser extension
+
+### Non-Functional Requirements (All Met ✅)
+
+**NFR-1: Simplicity**
+- ✅ Clean, minimal interface
+- ✅ Easy to understand and use
+- ✅ No complex setup required
+- ✅ No test setup required
+
+**NFR-2: Performance**
+- ✅ Fast load time
+- ✅ Responsive UI interactions
+- ✅ No noticeable lag when updating data
+
+**NFR-3: Visual Design**
+- ✅ User-friendly aesthetic
+- ✅ Clear visual hierarchy
+- ✅ Readable typography
+
+### Required Features - MVP (All Implemented ✅)
+
+**1. Greeting** ✅
+- ✅ Show current time
+- ✅ Show current date
+- ✅ Show greeting based on time of day
+
+**2. Focus Timer** ✅
+- ✅ 25-minute timer
+- ✅ Start, stop, and reset buttons
+
+**3. To-Do List** ✅
+- ✅ Add tasks
+- ✅ Edit tasks
+- ✅ Mark tasks as done
+- ✅ Delete tasks
+- ✅ Save tasks using Local Storage
+
+**4. Quick Links** ✅
+- ✅ Buttons that open favorite websites
+- ✅ Links saved in Local Storage
+
+### Optional Challenges (3/5 Implemented ✅)
+
+**Implemented:**
+1. ✅ **Light/Dark Mode** - Theme toggle with floating button
+2. ✅ **Change Pomodoro Time** - Custom timer duration (1-120 minutes)
+3. ✅ **Sort Tasks** - By Date, Status, Alphabetical with ascending/descending
+
+**Not Implemented:**
+4. ❌ Custom name in greeting
+5. ❌ Prevent duplicate tasks
+
+### Folder Rules (All Met ✅)
+
+- ✅ Only 1 CSS file inside `css/` folder
+- ✅ Only 1 JavaScript file inside `js/` folder
+- ✅ Code is clean and readable
 
 ## Glossary
 

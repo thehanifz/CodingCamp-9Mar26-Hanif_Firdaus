@@ -10,7 +10,8 @@ const CONFIG = {
     TIME_FORMAT: 'timeFormat',
     THEME: 'theme',
     TIMER_DURATION: 'timerDuration',
-    TASK_SORT: 'taskSort'
+    TASK_SORT: 'taskSort',
+    TASK_SORT_DIR: 'taskSortDir'
   },
   TIME_FORMATS: {
     TWELVE_HOUR: '12',
@@ -24,12 +25,17 @@ const CONFIG = {
     CREATION: 'creation',
     COMPLETED: 'completed',
     ALPHABETICAL: 'alphabetical'
+  },
+  SORT_DIRECTIONS: {
+    ASC: 'asc',
+    DESC: 'desc'
   }
 };
 
 let timeFormat = CONFIG.TIME_FORMATS.TWENTY_FOUR_HOUR;
 let currentTheme = CONFIG.THEMES.LIGHT;
 let taskSortOrder = CONFIG.SORT_OPTIONS.CREATION;
+let taskSortDirection = CONFIG.SORT_DIRECTIONS.ASC;
 
 // ============================================
 // Greeting Display Component
@@ -327,19 +333,45 @@ function resetTimer() {
  * Sets custom timer duration
  */
 function setCustomTimerDuration() {
-  const minutes = prompt('Enter timer duration in minutes (1-120):', 
-    Math.floor(timerState.remainingSeconds / 60));
+  const currentMinutes = Math.floor(timerState.remainingSeconds / 60);
   
-  if (minutes === null) return;
+  // Show options with preset durations
+  const presets = [
+    { label: '5 minutes', value: 5 },
+    { label: '10 minutes', value: 10 },
+    { label: '15 minutes', value: 15 },
+    { label: '25 minutes (Pomodoro)', value: 25 },
+    { label: '30 minutes', value: 30 },
+    { label: '45 minutes', value: 45 },
+    { label: '60 minutes', value: 60 }
+  ];
   
-  const parsedMinutes = parseInt(minutes, 10);
+  let message = 'Choose a preset or enter custom duration (1-120 minutes):\n\n';
+  presets.forEach((preset, index) => {
+    message += `${index + 1}. ${preset.label}\n`;
+  });
+  message += '\nOr enter a custom number:';
   
-  if (isNaN(parsedMinutes) || parsedMinutes < 1 || parsedMinutes > 120) {
+  const input = prompt(message, currentMinutes);
+  
+  if (input === null) return;
+  
+  let minutes;
+  
+  // Check if input is a preset number (1-7)
+  const presetIndex = parseInt(input, 10);
+  if (presetIndex >= 1 && presetIndex <= presets.length) {
+    minutes = presets[presetIndex - 1].value;
+  } else {
+    minutes = parseInt(input, 10);
+  }
+  
+  if (isNaN(minutes) || minutes < 1 || minutes > 120) {
     alert('Please enter a valid duration between 1 and 120 minutes.');
     return;
   }
   
-  const seconds = parsedMinutes * 60;
+  const seconds = minutes * 60;
   CONFIG.TIMER_DEFAULT_SECONDS = seconds;
   timerState.remainingSeconds = seconds;
   
@@ -361,16 +393,17 @@ function initTimer() {
   const startBtn = document.getElementById('start-btn');
   const stopBtn = document.getElementById('stop-btn');
   const resetBtn = document.getElementById('reset-btn');
+  const customBtn = document.getElementById('custom-btn');
   const timerDisplay = document.getElementById('timer-display');
   
   if (startBtn) startBtn.addEventListener('click', startTimer);
   if (stopBtn) stopBtn.addEventListener('click', stopTimer);
   if (resetBtn) resetBtn.addEventListener('click', resetTimer);
+  if (customBtn) customBtn.addEventListener('click', setCustomTimerDuration);
   
-  // Double-click timer display to set custom duration
+  // Double-click timer display to set custom duration (alternative method)
   if (timerDisplay) {
     timerDisplay.style.cursor = 'pointer';
-    timerDisplay.title = 'Double-click to set custom duration';
     timerDisplay.addEventListener('dblclick', setCustomTimerDuration);
   }
 }
@@ -555,41 +588,75 @@ function renderTasks() {
 }
 
 /**
- * Gets sorted tasks based on current sort order
+ * Gets sorted tasks based on current sort order and direction
  */
 function getSortedTasks() {
   const tasksCopy = [...tasks];
   
+  let sorted;
   switch (taskSortOrder) {
     case CONFIG.SORT_OPTIONS.COMPLETED:
-      return tasksCopy.sort((a, b) => {
+      sorted = tasksCopy.sort((a, b) => {
         if (a.completed === b.completed) return a.createdAt - b.createdAt;
         return a.completed ? 1 : -1;
       });
+      break;
     
     case CONFIG.SORT_OPTIONS.ALPHABETICAL:
-      return tasksCopy.sort((a, b) => a.text.localeCompare(b.text));
+      sorted = tasksCopy.sort((a, b) => a.text.localeCompare(b.text));
+      break;
     
     case CONFIG.SORT_OPTIONS.CREATION:
     default:
-      return tasksCopy.sort((a, b) => a.createdAt - b.createdAt);
+      sorted = tasksCopy.sort((a, b) => a.createdAt - b.createdAt);
+      break;
   }
+  
+  // Apply direction
+  return taskSortDirection === CONFIG.SORT_DIRECTIONS.DESC ? sorted.reverse() : sorted;
 }
 
 /**
  * Changes task sort order
  */
 function changeTaskSort(sortOption) {
-  taskSortOrder = sortOption;
-  saveToLocalStorage(CONFIG.STORAGE_KEYS.TASK_SORT, sortOption);
+  // If clicking same sort, toggle direction
+  if (taskSortOrder === sortOption) {
+    taskSortDirection = taskSortDirection === CONFIG.SORT_DIRECTIONS.ASC 
+      ? CONFIG.SORT_DIRECTIONS.DESC 
+      : CONFIG.SORT_DIRECTIONS.ASC;
+  } else {
+    // New sort option, default to ascending
+    taskSortOrder = sortOption;
+    taskSortDirection = CONFIG.SORT_DIRECTIONS.ASC;
+  }
+  
+  saveToLocalStorage(CONFIG.STORAGE_KEYS.TASK_SORT, taskSortOrder);
+  saveToLocalStorage(CONFIG.STORAGE_KEYS.TASK_SORT_DIR, taskSortDirection);
   renderTasks();
   
-  // Update active sort button
+  // Update active sort button with direction indicator
+  updateSortButtons();
+}
+
+/**
+ * Updates sort button UI with direction indicators
+ */
+function updateSortButtons() {
   document.querySelectorAll('.sort-btn').forEach(btn => {
     btn.classList.remove('active');
+    const arrow = btn.querySelector('.sort-arrow');
+    if (arrow) arrow.remove();
   });
-  const activeBtn = document.querySelector(`[data-sort="${sortOption}"]`);
-  if (activeBtn) activeBtn.classList.add('active');
+  
+  const activeBtn = document.querySelector(`[data-sort="${taskSortOrder}"]`);
+  if (activeBtn) {
+    activeBtn.classList.add('active');
+    const arrow = document.createElement('span');
+    arrow.className = 'sort-arrow';
+    arrow.textContent = taskSortDirection === CONFIG.SORT_DIRECTIONS.ASC ? ' ↑' : ' ↓';
+    activeBtn.appendChild(arrow);
+  }
 }
 
 /**
@@ -598,8 +665,9 @@ function changeTaskSort(sortOption) {
 function initTasks() {
   tasks = loadTasks();
   
-  // Load saved sort order
+  // Load saved sort order and direction
   taskSortOrder = getFromLocalStorage(CONFIG.STORAGE_KEYS.TASK_SORT, CONFIG.SORT_OPTIONS.CREATION);
+  taskSortDirection = getFromLocalStorage(CONFIG.STORAGE_KEYS.TASK_SORT_DIR, CONFIG.SORT_DIRECTIONS.ASC);
   
   renderTasks();
   
@@ -628,9 +696,8 @@ function initTasks() {
     });
   });
   
-  // Set initial active sort button
-  const activeBtn = document.querySelector(`[data-sort="${taskSortOrder}"]`);
-  if (activeBtn) activeBtn.classList.add('active');
+  // Set initial active sort button with direction
+  updateSortButtons();
 }
 
 // ============================================

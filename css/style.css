@@ -181,6 +181,10 @@ section h2 {
   display: flex;
   gap: 12px;
   justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  max-width: 600px;
+  margin: 0 auto;
 }
 
 .timer-controls button {
@@ -191,6 +195,9 @@ section h2 {
   cursor: pointer;
   transition: all 0.3s;
   font-weight: 600;
+  flex: 0 0 auto;
+  min-width: 100px;
+  max-width: 140px;
 }
 
 #start-btn {
@@ -220,6 +227,16 @@ section h2 {
 
 #reset-btn:hover {
   background: #dc2626;
+  transform: translateY(-2px);
+}
+
+.custom-btn {
+  background: #8b5cf6;
+  color: white;
+}
+
+.custom-btn:hover {
+  background: #7c3aed;
   transform: translateY(-2px);
 }
 
@@ -253,6 +270,11 @@ section h2 {
   background: #667eea;
   color: white;
   border-color: #667eea;
+}
+
+.sort-arrow {
+  margin-left: 4px;
+  font-size: 0.9rem;
 }
 
 .task-input-container {
@@ -365,6 +387,7 @@ section h2 {
   display: flex;
   gap: 8px;
   margin-bottom: 16px;
+  align-items: stretch;
 }
 
 #link-name-input,
@@ -377,6 +400,15 @@ section h2 {
   transition: border-color 0.3s;
   background: var(--input-bg);
   color: var(--text-primary);
+  box-sizing: border-box;
+}
+
+#link-name-input {
+  min-width: 0; /* Prevent flex overflow */
+}
+
+#link-url-input {
+  min-width: 0; /* Prevent flex overflow */
 }
 
 #link-name-input:focus,
@@ -394,6 +426,8 @@ section h2 {
   cursor: pointer;
   font-weight: 600;
   transition: all 0.3s;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 #add-link-btn:hover {
@@ -516,13 +550,16 @@ section h2 {
   }
   
   .timer-controls {
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     gap: 8px;
+    max-width: 100%;
   }
   
   .timer-controls button {
     width: 100%;
     padding: 14px;
+    max-width: none;
   }
   
   /* Task Section */
